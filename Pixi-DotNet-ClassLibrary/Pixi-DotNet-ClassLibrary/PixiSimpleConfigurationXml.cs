@@ -8,82 +8,42 @@ using System.Xml;
 
 namespace Pixi.Configuration
 {
+
     //---------------------------------------------
-    //  Class PixiSimpleConfigItem
+    //  Class PixiSimpleConfigurationXml
     //---------------------------------------------
-    public class PixiSimpleConfigItem
+    public class PixiSimpleConfigurationXml
     {
         //------------------------------------
         // Class Properties
         //------------------------------------
-        private string _ItemName = "";
-        private string _ItemValue = "";
 
-
-        public String ItemName
-        {
-            get { return _ItemName; }
-            set { _ItemName = value; }
-        }
-
-        public string ItemValue
-        {
-            get { return _ItemValue; }
-            set { _ItemValue = value; }
-        }
-
-        //------------------------------------
-        // Class Constructors
-        //------------------------------------
-        public PixiSimpleConfigItem(string pItemName, string pItemValue)
-        {
-            ItemName = pItemName;
-            ItemValue = pItemValue;
-        }
-
-    }
-
-    //---------------------------------------------
-    //  Class PixiSimpleConfiguration
-    //---------------------------------------------
-    public class PixiSimpleConfiguration
-    {
-        //------------------------------------
-        // Class Properties
-        //------------------------------------
-        private string _FileName = "";
-        private string _FileFolder = "";
-        private string _FilePath = "";
-
+        private string mFileFolder = "";
+        private string mFileName = "";
         public string FileFolder
         {
-            get { return _FileFolder; }
-            set {
-                _FileFolder = value;
-                _FilePath = _FileFolder + "x" + _FileName;
+            get { return mFileFolder; }
+            set
+            {
+              mFileFolder = value;
+             FilePath = mFileFolder + "x" + mFileName;
             }
         }
-
         public string FileName
         {
-            get { return _FileName; }
+            get { return mFileName; }
             set {
-                _FileName = value;
-                _FilePath = _FileFolder + "\\" + _FileName;
+                mFileName = value;
+                FilePath = mFileFolder + "\\" + mFileName;
             }
         }
-
-        public string FilePath
-        {
-            get { return _FilePath; }
-        }
-
+        public string FilePath { get; set; } = "";
         public List<PixiSimpleConfigItem> PixiConfigItems = new List<PixiSimpleConfigItem>();
 
         //------------------------------------
         // Class Constructors
         //------------------------------------
-        public PixiSimpleConfiguration()
+        public PixiSimpleConfigurationXml()
         {
         }
 
@@ -131,13 +91,13 @@ namespace Pixi.Configuration
             int Rc = 0;
 
             // Check if FileName and FileFolder is filled with a value.
-            if (_FileName == "" | _FileFolder == "")
+            if (FileName == "" | FileFolder == "")
             {
                 return -9;
             }
 
             // Call public Function that have input parameters
-            Rc = CreateConfigfile(_FileFolder, _FileName);
+            Rc = CreateConfigfile(FileFolder, FileName);
 
             return Rc;
         }
@@ -160,45 +120,46 @@ namespace Pixi.Configuration
 
             // Check if the file exists.                
             // if exists return Rc -2.                
-            //if (System.IO.File.exist(strFilePath) == false)
-            //{
-            //    // Check if Folder exists.
-            //    if (FileIO.FileSystem.DirectoryExists(pFileFolder) = false)
-            //    {
-            //        // Create Folder if it does not exist.
-            //        FileIO.FileSystem.CreateDirectory(pFileFolder);
-            //    }
+            if (System.IO.File.Exists(strFilePath) == false)
+            {
+                // Check if Folder exists.
+                if (System.IO.Directory.Exists(pFileFolder) == false)
+                {
+                    // Create Folder if it does not exist.
+                    Directory.CreateDirectory(pFileFolder);
+                }
 
-            //    // Assign to public Properties class variables
-            //    _FileFolder = pFileFolder;
-            //    _FileName = pFileName;
-            //    _FilePath = strFilePath;
+                // Assign to public Properties class variables
+                FileFolder = pFileFolder;
+                FileName = pFileName;
+                FilePath = strFilePath;
 
-            //    //declare our xml writersettings object.                        
-            //    private XmlWriterSettings xmlSettings = new XmlWriterSettings();
-            //    // xmlwritersettings use indention for the xml.                        
-            //    xmlSettings.indent = true;
-            //    // Create the .xml document.                        
-            //    private XmlWriter XmlWrt = XmlWriter.Create(strFilePath, xmlSettings)
-            //    // Write the Xml declaration.                                
-            //    XmlWrt.WriteStartDocument();
-            //    // Write a comment.                                
-            //    XmlWrt.WriteComment("XML - Pixi Simple Configuration file.");
-            //    // Write the root element.                                
-            //    XmlWrt.WriteStartElement("Settings");
-            //    foreach (PixiConfigItem In ConfigItems)
-            //    {
-            //        XmlWrt.WriteStartElement(PixiConfigItem.ItemName);
-            //        XmlWrt.WriteString(PixiConfigItem.ItemValue.ToString);
-            //        XmlWrt.WriteEndElement();
-            //    }
-            //    // Close the XmlTextWriter.                                
-            //    XmlWrtWriteEndDocument();
-            //    XmlWrt.Close();
-            //else
-            //    return -2;
-            //}
-
+                //declare our xml writersettings object.                        
+                XmlWriterSettings xmlSettings = new XmlWriterSettings();
+                // xmlwritersettings use indention for the xml.                        
+                xmlSettings.Indent = true;
+                // Create the .xml document.                        
+                XmlWriter XmlWrt = XmlWriter.Create(strFilePath, xmlSettings);
+                // Write the Xml declaration.                                
+                XmlWrt.WriteStartDocument();
+                // Write a comment.                                
+                XmlWrt.WriteComment("XML - Pixi Simple Configuration file.");
+                // Write the root element.                                
+                XmlWrt.WriteStartElement("Settings");
+                foreach (PixiSimpleConfigItem PixiConfigItem in PixiConfigItems)
+                {
+                    XmlWrt.WriteStartElement(PixiConfigItem.ItemName);
+                    XmlWrt.WriteString(PixiConfigItem.ItemValue);
+                    XmlWrt.WriteEndElement();
+                }
+                // Close the XmlTextWriter.                                
+                XmlWrt.WriteEndDocument();
+                XmlWrt.Close();
+            }
+            else
+            {
+                return -2;
+            }
             return Rc;
         }
 
@@ -210,13 +171,13 @@ namespace Pixi.Configuration
             int Rc = 0;
 
             // Check if FileName and FileFolder is filled with a value.
-            if (_FileName == "" | _FileFolder == "")
+            if (FileName == "" | FileFolder == "")
             {
                 return -9;
             }
 
             // Call public Function that have input parameters
-            Rc = ReadConfigfile(_FileFolder, _FileName);
+            Rc = ReadConfigfile(FileFolder, FileName);
 
             return Rc;
         }
@@ -240,11 +201,7 @@ namespace Pixi.Configuration
             // if Not return Rc -1.                
             if (System.IO.File.Exists(strFilePath))
             {
-                // declare  xmlwritersettings object.                        
-                XmlWriterSettings xmlSettings = new XmlWriterSettings();
-                // xmlwritersettings use indention for the xml.                        
-                xmlSettings.Indent = true;
-                // Declare the XML document reader                        
+                // Declare the XML document reader
                 XmlReader Document = new XmlTextReader(strFilePath);
                 while (Document.Read())
                 {
@@ -261,7 +218,9 @@ namespace Pixi.Configuration
                     }
                 }
                 Document.Close();
+            }
             else
+            {
                 return -3;
             }
             return Rc;
@@ -276,13 +235,13 @@ namespace Pixi.Configuration
             string FilePath = "";
 
             // Check if FileName and FileFolder is filled with a value.
-            if (_FileName == "" | _FileFolder == "")
+            if (FileName == "" | FileFolder == "")
             {
                 return -9;
             }
 
-            FilePath = _FileFolder + "\\" + _FileName;
-            Rc = SaveConfigfile(FileFolder, _FileName);
+            FilePath = FileFolder + "\\" + FileName;
+            Rc = SaveConfigfile(FileFolder, FileName);
     
             return Rc;
         }
@@ -300,8 +259,8 @@ namespace Pixi.Configuration
                 return -9;
             }
 
-            _FileFolder = pFileFolder;
-            _FileName = pFileName;
+            FileFolder = pFileFolder;
+            FileName = pFileName;
             strFilePath = pFileFolder + "\\" + pFileName;
 
             // Check if the file exists.                
@@ -330,7 +289,9 @@ namespace Pixi.Configuration
                 // Close the XmlTextWriter.                                
                 XmlWrt.WriteEndDocument();
                 XmlWrt.Close();
+            }
             else
+            { 
                 return -3;
             }
 

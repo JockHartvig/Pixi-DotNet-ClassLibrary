@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PixiSimpleConfiguration.cs" />
+    <Compile Include="PixiSimpleConfigItem.cs" />
+    <Compile Include="PixiSimpleConfigurationXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
