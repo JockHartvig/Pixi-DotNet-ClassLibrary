@@ -18,4 +18,10 @@ Further documentation https://github.com/JockHartvig/Pixi-DotNet-ClassLibrary/wi
 *Releases
 
 ** Ver 1.0.0.0
+
 Initial release.
+
+** Ver 1.0.1
+- FilePath chhnged to read-only and added ubut test for this.
+- Reorganised files
+- Changed Unit test
