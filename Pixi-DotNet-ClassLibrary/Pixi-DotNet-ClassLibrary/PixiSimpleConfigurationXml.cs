@@ -80,40 +80,47 @@ namespace Pixi.Configuration
                     return 0;
                 }
             }
-            return -1;
+            throw new System.ArgumentException("Property '" + pItemName + "' not found in config file");
         }
 
-        public int CreateConfigfile()
+        public void CreateConfigfile()
         {
             // returns Rc:
-            //   -2 - Configuration file allready exists
-            //   -9 - FilePath or FileFolder not filled with a value
-            int Rc = 0;
+            //   PixiConfigFileAllreadyExistException - Configuration file allready exists
+            //   System.ArgumentException - FilePath or FileFolder not filled with a value
 
             // Check if FileName and FileFolder is filled with a value.
             if (FileName == "" | FileFolder == "")
             {
-                return -9;
+                throw new System.ArgumentException("Properties FileFolder and FileName cannot be blank when creating config file");
             }
 
-            // Call public Function that have input parameters
-            Rc = CreateConfigfile(FileFolder, FileName);
-
-            return Rc;
+            try
+            {
+                // Call public Function that have input parameters
+                CreateConfigfile(FileFolder, FileName);
+            }
+            catch (System.ArgumentException ex)
+            {
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank when creating config file", ex);
+            }
+            catch (PixiConfigFileAllreadyExistException ex)
+            {
+                throw new PixiConfigFileAllreadyExistException("Configuration file allready exists", ex);
+            }
         }
 
-        public int CreateConfigfile(string pFileFolder, string pFileName)
+        public void CreateConfigfile(string pFileFolder, string pFileName)
         {
-            // Rc:
-            //   -2 - Configuration file allready exists
-            //   -9 - FilePath or FileFolder not filled with a value
-            int Rc = 0;
+            // Exceptions:
+            //   PixiConfigFileAllreadyExistException - Configuration file allready exists
+            //   System.ArgumentException - FilePath or FileFolder not filled with a value
             string strFilePath = "";
 
             // Check if FileName and FileFolder is filled with a value.
             if (pFileName == "" | pFileFolder == "")
             {
-                return -9;
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank");
             }
 
             strFilePath = pFileFolder + "\\" + pFileName;
@@ -158,41 +165,45 @@ namespace Pixi.Configuration
             }
             else
             {
-                return -2;
+                throw new PixiConfigFileAllreadyExistException("Configuration file allready exists");
             }
-            return Rc;
         }
 
-        public int ReadConfigfile()
+        public void ReadConfigfile()
         {
-            // Rc:
-            //   -3 - Configuration file do not exist
-            //   -9 - FilePath or FileFolder not filled with a value
-            int Rc = 0;
+            // Exceptions:
+            //   PixiConfigFileNotExistException - Configuration file do not exist
+            //   System.ArgumentException - Properties FileFolder and FileName cannot be blank when reading config file
 
             // Check if FileName and FileFolder is filled with a value.
             if (FileName == "" | FileFolder == "")
             {
-                return -9;
+                throw new System.ArgumentException("Properties FileFolder and FileName cannot be blank when reading config file");
             }
 
             // Call public Function that have input parameters
-            Rc = ReadConfigfile(FileFolder, FileName);
+            try
+            {
+                ReadConfigfile(FileFolder, FileName);
+            }
+            catch (System.ArgumentException ex)
+            {
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank when reading config file", ex);
+            }
 
-            return Rc;
         }
-        public int ReadConfigfile(string pFileFolder, string pFileName)
+
+        public void ReadConfigfile(string pFileFolder, string pFileName)
         {
-            // Rc:
-            //   -3 - Configuration file do not exist
-            //   -9 - FilePath or FileFolder not filled with a value
-            int Rc = 0;
+            // Exceptions:
+            //   PixiConfigFileNotExistException - Configuration file do not exist
+            //   System.ArgumentException - Parameters FileFolder and FileName cannot be blank
             string strFilePath = "";
 
             // Check if FileName and FileFolder is filled with a value.
             if (pFileName == "" | pFileFolder == "")
             {
-                return -9;
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank");
             }
 
             strFilePath = pFileFolder + "\\" + pFileName;
@@ -221,42 +232,45 @@ namespace Pixi.Configuration
             }
             else
             {
-                return -3;
+                throw new PixiConfigFileNotExistException("Configuration file do not exists");
             }
-            return Rc;
         }
 
-        public int SaveConfigfile()
+        public void SaveConfigfile()
         {
-            // Rc:
-            //   -3 - Configuration file do not exist
-            //   -9 - FilePath or FileFolder not filled with a value
-            int Rc = 0;
+            // Exceptions:
+            //   System.PixiConfigFileNotExistException - Configuration file do not exist
+            //   System.ArgumentException - FilePath or FileFolder not filled with a value
             string FilePath = "";
 
             // Check if FileName and FileFolder is filled with a value.
             if (FileName == "" | FileFolder == "")
             {
-                return -9;
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank");
             }
 
-            FilePath = FileFolder + "\\" + FileName;
-            Rc = SaveConfigfile(FileFolder, FileName);
-    
-            return Rc;
+            try
+            {
+                FilePath = FileFolder + "\\" + FileName;
+                SaveConfigfile(FileFolder, FileName);
+            }
+            catch (System.ArgumentException ex)
+            {
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank when save config file", ex);
+            }
         }
 
-        public int SaveConfigfile(string pFileFolder, string pFileName)
+        public void SaveConfigfile(string pFileFolder, string pFileName)
         {
-            // Rc:
-            //   -3 - Configuration file do not exist
-            //   -9 - FilePath or FileFolder not filled with a value
+            // Exceptions:
+            //   PixiConfigFileNotExistException - Configuration file do not exist
+            //   System.ArgumentException - FilePath or FileFolder not filled with a value
             string strFilePath = "";
 
             // Check if FileName and FileFolder is filled with a value.
             if (pFileName == "" | pFileFolder == "")
             {
-                return -9;
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank");
             }
 
             FileFolder = pFileFolder;
@@ -291,11 +305,39 @@ namespace Pixi.Configuration
                 XmlWrt.Close();
             }
             else
-            { 
-                return -3;
+            {
+                throw new PixiConfigFileNotExistException("Configuration file do not exists");
             }
 
-            return 0;
         }
     } // End  public class PixiSimpleConfiguration 
+
+    [Serializable()]
+    public class PixiConfigFileAllreadyExistException : System.Exception
+    {
+        public PixiConfigFileAllreadyExistException() : base() { }
+        public PixiConfigFileAllreadyExistException(string message) : base(message) { }
+        public PixiConfigFileAllreadyExistException(string message, System.Exception inner) : base(message, inner) { }
+
+        // A constructor is needed for serialization when an
+        // exception propagates from a remoting server to the client. 
+        protected PixiConfigFileAllreadyExistException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context)
+        { }
+    }
+
+    [Serializable()]
+    public class PixiConfigFileNotExistException : System.Exception
+    {
+        public PixiConfigFileNotExistException() : base() { }
+        public PixiConfigFileNotExistException(string message) : base(message) { }
+        public PixiConfigFileNotExistException(string message, System.Exception inner) : base(message, inner) { }
+
+        // A constructor is needed for serialization when an
+        // exception propagates from a remoting server to the client. 
+        protected PixiConfigFileNotExistException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context)
+        { }
+    }
+
 }  // End Namespace
