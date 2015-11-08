@@ -14,3 +14,7 @@ Supports reading, creating and updating simple configuration files in XML format
 </Settings>
 ````
 
+*Releases
+
+** Ver 1.0.0.0
+Initial release.
