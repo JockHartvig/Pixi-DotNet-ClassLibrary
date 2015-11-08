@@ -25,6 +25,6 @@ Package name Pixi-DotNet-ClassLibrary.
 Initial release.
 
 ** Ver 1.0.1
-- FilePath chhnged to read-only and added ubut test for this.
-- Reorganised files
-- Changed Unit test
+- FilePath changed to read-only and added unit test for this.
+- Reorganised source files in folders pr class.
+- Changed Unit tests.
