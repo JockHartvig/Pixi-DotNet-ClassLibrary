@@ -50,7 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PixiSimpleConfiguration-UnitTest.cs" />
+    <Compile Include="PixiSimpleConfigurationXml-UnitTest.cs" />
     <Compile Include="PixiSimpleConfigurationItem-UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

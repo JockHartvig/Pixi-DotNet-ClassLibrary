@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PixiSimpleConfigItem.cs" />
-    <Compile Include="PixiSimpleConfigurationXml.cs" />
+    <Compile Include="PixiSimpleConfigurationXml\PixiConfigurationXmlExceptions.cs" />
+    <Compile Include="PixiSimpleConfigurationXml\PixiSimpleConfigItem.cs" />
+    <Compile Include="PixiSimpleConfigurationXml\PixiSimpleConfigurationXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +56,7 @@
   <ItemGroup>
     <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.
