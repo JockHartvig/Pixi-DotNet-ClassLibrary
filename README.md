@@ -15,6 +15,9 @@ Supports reading, creating and updating simple configuration files in XML format
 ````
 Further documentation https://github.com/JockHartvig/Pixi-DotNet-ClassLibrary/wiki/PixiSimpleConfiguration
 
+Class library is available on NUGET.
+Package name Pixi-DotNet-ClassLibrary.
+
 *Releases
 
 ** Ver 1.0.0.0
