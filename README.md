@@ -13,6 +13,7 @@ Supports reading, creating and updating simple configuration files in XML format
   <Item2>ABC</Item2>
 </Settings>
 ````
+Further documentation https://github.com/JockHartvig/Pixi-DotNet-ClassLibrary/wiki/PixiSimpleConfiguration
 
 *Releases
 
