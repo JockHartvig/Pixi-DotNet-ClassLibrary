@@ -26,7 +26,7 @@ $releaseNotes = ""
 #	e.g. $configuration = "Release"
 #		 $platform = "AnyCPU"
 $configuration = ""
-$platform = ""
+$platform = "AnyCPU"
 
 # Specify any NuGet Pack Properties to pass to MsBuild.
 #	e.g. $packProperties = "TargetFrameworkVersion=v3.5;Optimize=true"
@@ -58,7 +58,7 @@ $appendConfigurationAndPlatformToNuGetPackageFileName = $true
 $sourceToUploadTo = ""
 
 # The API Key to use to upload the package to the gallery. If not provided and a system-level one does not exist for the specified Source, you will be prompted for it.
-$apiKey = ""
+$apiKey = "cc74f7fe-c746-4ebe-9682-18c2123d6900"
 
 # Specify any NuGet Push options to pass to nuget.exe.
 #	e.g. $pushOptions = "-Timeout 120"

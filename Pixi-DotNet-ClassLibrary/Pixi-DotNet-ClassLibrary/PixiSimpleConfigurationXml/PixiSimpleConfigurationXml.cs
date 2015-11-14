@@ -60,7 +60,7 @@ namespace Pixi.Configuration
         //   -9 - FilePath or FileFolder not filled with a value
         //--------------------------------------------------------
 
-        public object GetItemValue(string pItemName)
+        public string GetItemValue(string pItemName)
         {
             // Loop through the Class public Property ConfigItems Collection.
             foreach (var obj in PixiConfigItems)
@@ -85,6 +85,60 @@ namespace Pixi.Configuration
                 }
             }
             throw new System.ArgumentException("Property '" + pItemName + "' not found in config file");
+        }
+
+
+        public bool ConfigFileExists()
+        {
+            // Exceptions:
+            //   PixiConfigFileNotExistException - Configuration file do not exist
+            //   System.ArgumentException - Parameters FileFolder and FileName cannot be blank
+
+            // Check if FileName and FileFolder is filled with a value.
+            if (FileName == "" | FileFolder == "")
+            {
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank");
+            }
+
+            // Check if the file exists.                
+            // if Not return Rc -1.                
+            if (System.IO.File.Exists(FilePath))
+            {
+                return (true);
+            }
+            else
+            {
+                return(false);
+            }
+        }
+
+
+        public bool ConfigFileExists(string pFileFolder, string pFileName)
+        {
+            // Exceptions:
+            //   PixiConfigFileNotExistException - Configuration file do not exist
+            //   System.ArgumentException - Parameters FileFolder and FileName cannot be blank
+
+            string strFilePath = "";
+
+            // Check if FileName and FileFolder is filled with a value.
+            if (pFileName == "" | pFileFolder == "")
+            {
+                throw new System.ArgumentException("Parameters FileFolder and FileName cannot be blank");
+            }
+
+            strFilePath = pFileFolder + "\\" + pFileName;
+
+            // Check if the file exists.                
+            // if Not return Rc -1.                
+            if (System.IO.File.Exists(strFilePath))
+            {
+                return (true);
+            }
+            else
+            {
+                return (false);
+            }
         }
 
         public void CreateConfigfile()
@@ -227,7 +281,7 @@ namespace Pixi.Configuration
                         {
                             if (Document.Name == PixiConfigItem.ItemName)
                             {
-                                PixiConfigItem.ItemValue = Document.Value;
+                                PixiConfigItem.ItemValue = Document.ReadInnerXml();
                             }
                         }
                     }

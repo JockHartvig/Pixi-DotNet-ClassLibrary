@@ -53,7 +53,7 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
         //A test for CreateConfig_file
         //</summary>
         [TestMethod]
-        public void PixiSimpleConfigurationXml_CreateConfigfile_TC001_Test()
+        public void PixiSimpleConfigurationXml_TC001_CreateConfigfile_UnitTest()
         {
             PixiSimpleConfigurationXml target;
 
@@ -83,7 +83,7 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
         }
 
         [TestMethod]
-        public void PixiSimpleConfigurationXml_CreateConfigfile_TC002_Test()
+        public void PixiSimpleConfigurationXml_TC002_CreateConfigfile_UnitTest()
         {
             PixiSimpleConfigurationXml target;
 
@@ -115,7 +115,7 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
 
 
         [TestMethod]
-        public void PixiSimpleConfigurationXml_CreateConfigfile_TC003_Test()
+        public void PixiSimpleConfigurationXml_TC003_CreateConfigfile_UnitTest()
         {
             PixiSimpleConfigurationXml target;
 
@@ -165,7 +165,7 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
         //A test for ReadConfigfile
         //</summary>
         [TestMethod]
-        public void PixiSimpleConfigurationXml_ReadConfigfile_Test()
+        public void PixiSimpleConfigurationXml_TC004_ReadConfigfile__UnitTest()
         {
             int Rc = 0;
             int Count = 0;
@@ -190,11 +190,13 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
                 Assert.AreEqual(0, Rc, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 0 - ReadConfigFile, Fail when No Directory/file exists");
             }
             target = null;
-
+            
             //----------------------------------------------------
             // Test 1 - ReadConfigfile() with directory exists, File exists
             //-----------------------------------------------------
             target = new PixiSimpleConfigurationXml();
+            target.PixiConfigItems.Add(new PixiSimpleConfigItem("Item1", "xxx"));
+            target.PixiConfigItems.Add(new PixiSimpleConfigItem("Item2", "yyy"));
             target.FileFolder = cTestFolder;
             target.FileName = cCfgFileName;
             try
@@ -214,7 +216,7 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
                 {
                     case 1:
                         Assert.AreEqual("Item1", obj.ItemName, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 1a - ReadConfigFile, Item.ItemName <> 'Item1'");
-                        Assert.AreEqual(123, obj.ItemValue, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 1a - ReadConfigFile, Item.ItemValue <> 123");
+                        Assert.AreEqual("123", obj.ItemValue, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 1a - ReadConfigFile, Item.ItemValue <> 123");
                         break;
                     case 2:
                         Assert.AreEqual("Item2", obj.ItemName, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 1a - ReadConfigFile, Item.ItemName <> 'Item2'");
@@ -246,7 +248,7 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
                 {
                     case 1:
                         Assert.AreEqual("Item1", obj.ItemName, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 2a - ReadConfigFile, Item.ItemName <> 'Item1'");
-                        Assert.AreEqual(123, obj.ItemValue, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 2a - ReadConfigFile, Item.ItemValue <> 123");
+                        Assert.AreEqual("123", obj.ItemValue, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 2a - ReadConfigFile, Item.ItemValue <> 123");
                         break;
                     case 2:
                         Assert.AreEqual("Item2", obj.ItemName, "PixiSimplePcConfigurationXml_ReadConfigfile: Test 2a - ReadConfigFile, Item.ItemName <> 'Item2'");
@@ -375,5 +377,161 @@ namespace Pixi_DotNet_ClassLibrary_UnitTest
             }
 
         }
+
+        [TestMethod]
+        public void PixiSimpleConfigurationXml_TC008_ConfigfileExists_UnitTest()
+        {
+            PixiSimpleConfigurationXml target;
+
+            bool lExists = false;
+
+            //-------------------------------------------------------------------------
+            // Test Case 008 - ConfigFileExists(cTestFolder, cCfgFileName) - With input parms
+            //-------------------------------------------------------------------------
+            if (Directory.Exists(cTestFolder))
+            {
+                Directory.Delete(cTestFolder, true);
+            }
+            // Test Case 008a - config file do not exist.
+            target = new PixiSimpleConfigurationXml();
+            try
+            {
+                lExists = target.ConfigFileExists(cTestFolder, cCfgFileName);
+                Assert.AreEqual(false, lExists, $"PixiSimpleConfigurationXml_TC008_ConfigfileExists_UnitTest: Test 008a - config file do not exist - ConfigFileExists({cTestFolder}, {cCfgFileName}), returnvalue <> false");
+            }
+            catch
+            {
+                Assert.Fail("PixiSimplePcConfigurationXml_CreateConfigfile: Test 008a - CreateConfigFile(Folde,File), Fail when input parms");
+            }
+            target = null;
+
+            // Test Case 008b - config file do exist.
+            target = new PixiSimpleConfigurationXml();
+
+            try
+            {
+                target.CreateConfigfile(cTestFolder, cCfgFileName);
+            }
+            catch
+            {
+                Assert.Fail("PixiSimplePcConfigurationXml_CreateConfigfile: Test 008b - CreateConfigFile(Folde,File), Fail when input parms");
+            }
+
+
+            try
+            {
+                lExists = target.ConfigFileExists(cTestFolder, cCfgFileName);
+                Assert.AreEqual(true, lExists, $"PixiSimpleConfigurationXml_TC008_ConfigfileExists_UnitTest: Test 008b - config file do exist - ConfigFileExists({cTestFolder}, {cCfgFileName}), returnvalue <> true");
+            }
+            catch
+            {
+                Assert.Fail("PixiSimplePcConfigurationXml_ConfigFileExists: Test 008b - ConfigFileExists(Folde,File), Fail when input parms");
+            }
+            target = null;
+
+
+
+            if (Directory.Exists(cTestFolder))
+            {
+                Directory.Delete(cTestFolder, true);
+            }
+            // Test Case 008c - config file do not exist.
+            target = new PixiSimpleConfigurationXml();
+            target.FileFolder = cTestFolder;
+            target.FileName = cCfgFileName;
+            try
+            {
+                lExists = target.ConfigFileExists();
+                Assert.AreEqual(false, lExists, "PixiSimpleConfigurationXml_TC008_ConfigfileExists_UnitTest: Test 008c - config file do not exist - ConfigFileExists({cTestFolder}, {cCfgFileName}), returnvalue <> false");
+            }
+            catch
+            {
+                Assert.Fail("PixiSimplePcConfigurationXml_CreateConfigfile: Test 008c - CreateConfigFile(Folde,File), Fail when input parms");
+            }
+            target = null;
+
+            // Test Case 008d - config file do exist.
+            target = new PixiSimpleConfigurationXml();
+            target.FileFolder = cTestFolder;
+            target.FileName = cCfgFileName;
+
+            try
+            {
+                target.CreateConfigfile();
+            }
+            catch
+            {
+                Assert.Fail("PixiSimplePcConfigurationXml_CreateConfigfile: Test 008d - CreateConfigFile(Folde,File), Fail when input parms");
+            }
+
+
+            try
+            {
+                lExists = target.ConfigFileExists(cTestFolder, cCfgFileName);
+                Assert.AreEqual(true, lExists, "PixiSimpleConfigurationXml_TC008_ConfigfileExists_UnitTest: Test 008d - config file do exist - ConfigFileExists({cTestFolder}, {cCfgFileName}), returnvalue <> true");
+            }
+            catch
+            {
+                Assert.Fail("PixiSimplePcConfigurationXml_CreateConfigfile: Test 3 - CreateConfigFile(Folde,File), Fail when input parms");
+            }
+            target = null;
+
+            // Test cleanUp
+            Directory.Delete(cTestFolder, true);
+        }
+
+
+        [TestMethod]
+        public void PixiSimpleConfigurationXml_TC009_SetGetItemValue_UnitTest()
+        {
+            PixiSimpleConfigurationXml target;
+
+            string tItemName1 = "ItemName1";
+            string tItemValue1 = "123";
+            string tItemName2 = "ItemName2";
+            string tItemValue2 = "456";
+
+            string ItemValue = "";
+
+            //-------------------------------------------------------------------------
+            // Test Case 009 - SetGetItemValue(ItemName)
+            //-------------------------------------------------------------------------
+            target = new PixiSimpleConfigurationXml();
+            target.PixiConfigItems.Add(new PixiSimpleConfigItem(tItemName1, tItemValue1));
+            target.PixiConfigItems.Add(new PixiSimpleConfigItem(tItemName2, tItemValue2));
+
+            // Test Case 009a - GetItemValue ItemName1
+            ItemValue = target.GetItemValue(tItemName1);
+            Assert.AreEqual(tItemValue1, ItemValue, $"PixiSimpleConfigurationXml_TC009_SetGetItemValue_UnitTest: Test 009a - GetItemValue({tItemName1}, {tItemValue1}) = {tItemValue1}");
+
+            // Test Case 009b - GetItemValue ItemName2
+            ItemValue = target.GetItemValue(tItemName2);
+            Assert.AreEqual(tItemValue2, ItemValue, $"PixiSimpleConfigurationXml_TC009_SetGetItemValue_UnitTest: Test 009b - GetItemValue({tItemName1}, {tItemValue1}) = {tItemValue1}");
+
+            // Test Case 009c - SetItemValue ItemName1
+            tItemValue1 = "Value1A";
+            target.SetItemValue(tItemName1, tItemValue1);
+            ItemValue = target.GetItemValue(tItemName1);
+            Assert.AreEqual(tItemValue1, ItemValue, $"PixiSimpleConfigurationXml_TC009_SetGetItemValue_UnitTest: Test 009c - SetItemValue({tItemName1}, {tItemValue1}) = {tItemValue1})");
+
+            // Test Case 009d - SetItemValue ItemName3 - Not in item collection.
+            tItemValue1 = "Value1A";
+            try
+            {
+                target.SetItemValue("ItemName3", tItemValue1);
+                Assert.Fail($"PixiSimpleConfigurationXml_TC009_SetGetItemValue_UnitTest: Test 009d - SetItemValue for item not in collection. No exception thrown.");
+            }
+            catch( ArgumentException)
+            {
+
+            }
+
+            ItemValue = target.GetItemValue(tItemName1);
+            Assert.AreEqual(tItemValue1, ItemValue, $"PixiSimpleConfigurationXml_TC009_SetGetItemValue_UnitTest: Test 009c - SetItemValue({tItemName1}, {tItemValue1}) = {tItemValue1})");
+
+            target = null;
+
+        }
+
     }
 }
