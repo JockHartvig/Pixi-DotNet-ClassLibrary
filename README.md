@@ -21,9 +21,9 @@ Package name Pixi-DotNet-ClassLibrary.
 #Releases
 
 ## Ver 1.1.0
-•Changed return of GetItemValue from Object to string.
-•Fixed bug in ReadConfigFile allways returning space.
-•Added Sample application 1
+- Changed return of GetItemValue from Object to string.
+- Fixed bug in ReadConfigFile allways returning space.
+- Added Sample application 1
 
 ## Ver 1.0.1
 - FilePath changed to read-only and added unit test for this.
