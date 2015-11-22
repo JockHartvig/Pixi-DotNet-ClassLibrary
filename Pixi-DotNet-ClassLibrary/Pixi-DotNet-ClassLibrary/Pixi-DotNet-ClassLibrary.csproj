@@ -48,6 +48,9 @@
   <ItemGroup>
     <None Include="Documentation\ReleaseNotes.md" />
     <None Include="packages.config" />
+    <None Include="Pixi-DotNet-ClassLibrary.nuspecx">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="_CreateNewNuGetPackage\Config.ps1" />
     <None Include="_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1" />
     <None Include="_CreateNewNuGetPackage\DoNotModify\New-NuGetPackage.ps1" />

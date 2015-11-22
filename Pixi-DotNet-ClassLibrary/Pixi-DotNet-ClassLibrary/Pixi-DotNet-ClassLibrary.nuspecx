@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<metadata>
+<id>Pixi-DotNet-ClassLibrary</id>
+<version></version>
+<title>Pixi-DotNet-ClassLibrary</title>
+<authors>JockHartvig</authors>
+<owners>JockHartvig</owners>
+<projectUrl>https://github.com/JockHartvig/Pixi-DotNet-ClassLibrary/wiki</projectUrl>
+<requireLicenseAcceptance>false</requireLicenseAcceptance>
+<description>A .NET class library with simple helper classes for .NET development.
+
+Currently only one class:
+PixiSimpleConfigurationXml.
+
+Source can be found on GitHub https://github.com/JockHartvig/Pixi-DotNet-ClassLibrary.
+
+Description is in writing on GitHub Wiki:
+https://github.com/JockHartvig/Pixi-DotNet-ClassLibrary/wiki
+
+Apology for documentation not ready to those 60 who have downloaded this package within the first day.
+I did not realize that so many would download the package so quickly.
+I am in the process of creating the documentation on how to uses the class on GitHub wiki.
+</description>
+<summary>A .NET class library with simple helper classes for .NET development.</summary>
+<releaseNotes>Ver 1.1.0
+- Changed return of GetItemValue from Object to string.
+- Fixed bug in ReadConfigFile allways returning space.
+- Added Sample application 1
+</releaseNotes>
+<copyright>Copyright ©  2015</copyright>
+<tags>Pixi Configuration XML</tags>
+</metadata>
+<files>
+<file src="lib\net452\Pixi-DotNet-ClassLibrary.dll" target="lib\net452\Pixi-DotNet-ClassLibrary.dll" />
+</files>
+</package>
