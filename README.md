@@ -1,6 +1,6 @@
 # Pixi-DotNet-ClassLibrary
 
-is a .NET class library with a collection of simple helper classes..
+is a .NET class library with a collection of simple helper classes...
 
 **PixiSimpleConfigurationXml** is a class for handling very simple configuration files in XML format.  
 
