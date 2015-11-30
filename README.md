@@ -1,3 +1,8 @@
+# Status
+[![Build status]
+  (https://ci.appveyor.com/api/projects/status/vcf9eynpsq89w0ud?scg=true)]
+  (ci.appveyor.com/project/JockHartvig/pixi-dotnet-classlibrary)
+
 # Pixi-DotNet-ClassLibrary
 
 is a .NET class library with a collection of simple helper classes....
