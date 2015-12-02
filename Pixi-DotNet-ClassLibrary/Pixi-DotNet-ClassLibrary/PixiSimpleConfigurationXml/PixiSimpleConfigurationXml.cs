@@ -18,29 +18,29 @@ namespace Pixi.Configuration
         // Class Properties
         //------------------------------------
 
-        private string mFileFolder = "";
-        private string mFileName = "";
-        private string mFilePath = "";
+        private string _FileFolder = "";
+        private string _FileName = "";
+        private string _FilePath = "";
         public string FileFolder
         {
-            get { return mFileFolder; }
+            get { return _FileFolder; }
             set
             {
-                mFileFolder = value;
-                mFilePath = mFileFolder + "\\" + mFileName;
+                _FileFolder = value;
+                _FilePath = _FileFolder + "\\" + _FileName;
             }
         }
         public string FileName
         {
-            get { return mFileName; }
+            get { return _FileName; }
             set {
-                mFileName = value;
-                mFilePath = mFileFolder + "\\" + mFileName;
+                _FileName = value;
+                _FilePath = _FileFolder + "\\" + _FileName;
             }
         }
         public string FilePath
         {
-            get { return mFilePath; }
+            get { return _FilePath; }
         }
         public List<PixiSimpleConfigItem> PixiConfigItems = new List<PixiSimpleConfigItem>();
 
@@ -103,13 +103,9 @@ namespace Pixi.Configuration
             // Check if the file exists.                
             // if Not return Rc -1.                
             if (System.IO.File.Exists(FilePath))
-            {
                 return (true);
-            }
             else
-            {
                 return(false);
-            }
         }
 
 
@@ -195,9 +191,9 @@ namespace Pixi.Configuration
                 }
 
                 // Assign to public Properties class variables
-                mFileFolder = pFileFolder;
-                mFileName = pFileName;
-                mFilePath = strFilePath;
+                _FileFolder = pFileFolder;
+                _FileName = pFileName;
+                _FilePath = strFilePath;
 
                 //declare our xml writersettings object.                        
                 XmlWriterSettings xmlSettings = new XmlWriterSettings();
